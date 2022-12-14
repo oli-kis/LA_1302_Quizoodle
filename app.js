@@ -110,12 +110,12 @@ function checkTextQuestion() {
 function results() {
   //Render win page
   quiz.innerHTML = `  
-         <h2>You answered ${score}/${
-    quizData.length + 1
-  } questions correctly</h2>  
-  </br> <h2>You were right ${getScoreInPercent(score)}% of the time </h2>
+  <h2>You answered ${score}/${quizData.length + 1} 
+  questions correctly</h2>  
+  </br> <h2>You were right ${getScoreInPercent(score)}% 
+  of the time </h2>
   <img src="trophy.png" alt="" />
-         <button onclick="location.reload()">Play Again</button>  
+  <button onclick="location.reload()">Play Again</button>  
        `;
 }
 
@@ -123,17 +123,18 @@ function getScoreInPercent(score) {
   return Math.round((score / (quizData.length + 1)) * 100);
 }
 
-const deselectAnswers = () => {
+function deselectAnswers() {
   answerElements.forEach((answer) => (answer.checked = false));
-};
-const getSelected = () => {
+}
+function getSelected() {
   let answer;
   answerElements.forEach((answerElement) => {
     if (answerElement.checked) answer = answerElement.id;
   });
   return answer;
-};
-const loadQuiz = () => {
+}
+//Anfang teilweise übernommene Quelle: https://chat.openai.com/chat
+function loadQuiz() {
   deselectAnswers();
   const currentQuizData = quizData[currentQuiz];
   questionElement.innerText = currentQuizData.question;
@@ -141,15 +142,17 @@ const loadQuiz = () => {
   b_text.innerText = currentQuizData.b;
   c_text.innerText = currentQuizData.c;
   d_text.innerText = currentQuizData.d;
-};
+}
 loadQuiz();
 submitButton.addEventListener("click", () => {
   const answer = getSelected();
   if (answer) {
     if (answer === quizData[currentQuiz].correct) score++;
     currentQuiz++;
-    if (currentQuiz < quizData.length) loadQuiz();
-    else {
+    if (currentQuiz < quizData.length) {
+      loadQuiz();
+      //Ende teilweise übernommene Quelle: https://chat.openai.com/chat
+    } else {
       textQuestion();
     }
   }
